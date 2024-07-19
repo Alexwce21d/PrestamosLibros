@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Agregar/Editar Préstamo</title>
+<!-- CSS only -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">Control de Préstamos</a>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/prestamos}">Listado de Préstamos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12 container justify-content-center card">
+                <h1 class="text-center" th:text="${prestamo.id == null ? 'Agregar Préstamo' : 'Editar Préstamo'}"></h1>
+                <div class="card-body">
+                    <!-- El formulario maneja tanto agregar como editar según la presencia del ID -->
+                    <form th:action="@{${prestamo.id != null} ? '/prestamos/actualizar/' + ${prestamo.id} : '/prestamos/guardar'}"
+                          th:object="${prestamo}" method="POST">
+                        <div class="form-group">
+                            <label>Estudiante:</label>
+                            <select name="estudiante" th:field="*{estudiante.id}" class="form-control" required>
+                                <option th:each="estudiante : ${estudiantes}" 
+                                        th:value="${estudiante.id}" 
+                                        th:text="${estudiante.nombre}">
+                                    Estudiante
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Libro:</label>
+                            <select name="libro" th:field="*{libro.id}" class="form-control" required>
+                                <option th:each="libro : ${libros}" 
+                                        th:value="${libro.id}" 
+                                        th:text="${libro.titulo}">
+                                    Libro
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fecha de Préstamo:</label>
+                            <input type="date" name="fechaPrestamo" th:field="*{fechaPrestamo}" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fecha de Devolución:</label>
+                            <input type="date" name="fechaDevolucion" th:field="*{fechaDevolucion}" class="form-control" required>
+                        </div>
+
+                        <div class="box-footer">
+                            <button class="btn btn-success" type="submit">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

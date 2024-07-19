@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Listado de Préstamos</title>
+<!-- CSS only -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">Control de Préstamos</a>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/prestamos}">Listado de Préstamos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <h1>Lista de Préstamos</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <a th:href="@{/prestamos/nuevo}" class="btn btn-primary btn-sm mb3">Agregar Préstamo</a>
+            </div>
+        </div>
+        <br>
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Estudiante</th>
+                    <th>Libro</th>
+                    <th>Fecha de Préstamo</th>
+                    <th>Fecha de Devolución</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prestamo : ${prestamos}">
+                    <td th:text="${prestamo.estudiante.nombre}">Estudiante</td>
+                    <td th:text="${prestamo.libro.titulo}">Libro</td>
+                    <td th:text="${prestamo.fechaPrestamo}">Fecha de Préstamo</td>
+                    <td th:text="${prestamo.fechaDevolucion}">Fecha de Devolución</td>
+                    <td>
+                        <a th:href="@{/prestamos/editar/{id}(id=${prestamo.id})}" class="btn btn-info">Editar</a>
+                        <a th:href="@{/prestamos/{id}(id=${prestamo.id})}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
